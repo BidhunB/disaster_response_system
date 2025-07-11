@@ -66,33 +66,24 @@ const ReportForm = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
       <input
         placeholder="Disaster Type"
+        className="border p-2 rounded"
         value={formData.type}
         onChange={(e) => setFormData({ ...formData, type: e.target.value })}
       />
       <textarea
         placeholder="Description"
+        className="border p-2 rounded"
         value={formData.description}
         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
       />
 
       <div className="flex gap-2 items-center">
-        <input
-          placeholder="Latitude"
-          value={formData.lat}
-          onChange={(e) => setFormData({ ...formData, lat: e.target.value })}
-          readOnly
-        />
-        <input
-          placeholder="Longitude"
-          value={formData.lng}
-          onChange={(e) => setFormData({ ...formData, lng: e.target.value })}
-          readOnly
-        />
+       
         <button
           type="button"
           onClick={handleGetLocation}
           disabled={loadingLocation}
-          className="bg-blue-500 text-white px-2 py-1 rounded"
+          className="bg-blue-500 text-white px-2 py-1 rounded "
         >
           {loadingLocation ? "Locating..." : "📍 Use My Location"}
         </button>
@@ -102,7 +93,7 @@ const ReportForm = () => {
 
       <button
         type="submit"
-        className="bg-green-600 text-white px-4 py-2 rounded"
+        className="bg-green-600 text-white px-4 py-2 rounded mb-4"
         disabled={!formData.lat || !formData.lng}
       >
         Submit Report
