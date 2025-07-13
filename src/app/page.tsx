@@ -62,48 +62,48 @@ export default function Home() {
   const stats = getStats();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gray-50 dark:bg-black">
       {/* Header */}
-      <header className="bg-white dark:bg-gray-950 shadow-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 sticky top-0 z-[99]">
+        <div className="w-full mx-3.5 px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                🚨 Disaster Response System
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                Emergency Response
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 mt-1">
-                Crowdsourced emergency reporting and response coordination
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Real-time reporting system
               </p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               <div className="text-right">
-                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{stats.total}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Total Reports</div>
+                <div className="text-lg font-semibold text-blue-600 dark:text-blue-400">{stats.total}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Total</div>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats.today}</div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">Today</div>
+                <div className="text-lg font-semibold text-green-600 dark:text-green-400">{stats.today}</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">Today</div>
               </div>
               <a
                 href="/dashboard"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors font-medium"
+                className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors text-sm font-medium"
               >
-                📊 Dashboard
+                Dashboard
               </a>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main className="w-full mx-3.5 px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Report Form */}
           <div className="lg:col-span-1">
-            <div className="space-y-6">
+            <div className="space-y-4">
               <FirebaseStatus />
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 sticky top-8 border border-gray-200 dark:border-gray-700">
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  📝 Submit Emergency Report
+              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200/50 dark:border-gray-800/50 p-6 sticky top-24">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                  Submit Report
                 </h2>
                 <ReportForm />
               </div>
@@ -113,13 +113,13 @@ export default function Home() {
           {/* Right Column - Map and Filters */}
           <div className="lg:col-span-2">
             {/* Filters */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700">
-              <div className="flex flex-wrap items-center gap-4">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Filter Reports:</h3>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-4 mb-4 border border-gray-200/50 dark:border-gray-800/50">
+              <div className="flex flex-wrap items-center gap-3">
+                <h3 className="text-sm font-medium text-gray-900 dark:text-white">Filter:</h3>
                 <select
                   value={filter}
                   onChange={(e) => setFilter(e.target.value)}
-                  className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 text-sm"
                 >
                   <option value="all">All Reports</option>
                   <option value="flood">Flood</option>
@@ -130,19 +130,19 @@ export default function Home() {
                   <option value="traffic">Traffic Accident</option>
                   <option value="other">Other</option>
                 </select>
-                <span className="text-sm text-gray-600 dark:text-gray-300">
-                  Showing {filteredReports.length} of {reports.length} reports
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {filteredReports.length} of {reports.length}
                 </span>
               </div>
             </div>
 
             {/* Map */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm overflow-hidden border border-gray-200/50 dark:border-gray-800/50">
               {loading ? (
                 <div className="h-96 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600 dark:text-gray-300">Loading map...</p>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                    <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">Loading map...</p>
                   </div>
                 </div>
               ) : (
@@ -151,29 +151,29 @@ export default function Home() {
             </div>
 
             {/* Recent Reports List */}
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mt-6 border border-gray-200 dark:border-gray-700">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                📋 Recent Reports
+            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-4 mt-4 border border-gray-200/50 dark:border-gray-800/50">
+              <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">
+                Recent Reports
               </h3>
-              <div className="space-y-3 max-h-64 overflow-y-auto">
-                {filteredReports.slice(0, 10).map((report, index) => (
-                  <div key={report.id || index} className="border-l-4 border-blue-500 pl-4 py-2">
+              <div className="space-y-2 max-h-48 overflow-y-auto">
+                {filteredReports.slice(0, 8).map((report, index) => (
+                  <div key={report.id || index} className="border-l-2 border-blue-500 pl-3 py-2">
                     <div className="flex justify-between items-start">
-                      <div>
-                        <h4 className="font-medium text-gray-900 dark:text-white">{report.type}</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300">{report.description}</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate">{report.type}</h4>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{report.description}</p>
+                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                           {new Date(report.timestamp.toDate ? report.timestamp.toDate() : report.timestamp).toLocaleString()}
                         </p>
                       </div>
-                      <span className="text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">
-                        {report.lat?.toFixed(4)}, {report.lng?.toFixed(4)}
+                      <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 px-2 py-1 rounded-full ml-2 flex-shrink-0">
+                        {report.lat?.toFixed(3)}, {report.lng?.toFixed(3)}
                       </span>
                     </div>
                   </div>
                 ))}
                 {filteredReports.length === 0 && (
-                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">No reports found</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">No reports found</p>
                 )}
               </div>
             </div>

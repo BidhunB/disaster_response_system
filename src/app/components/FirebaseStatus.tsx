@@ -44,30 +44,30 @@ const FirebaseStatus = () => {
       };
 
       const docRef = await addDoc(collection(db, "reports"), testReport);
-      setTestResult(`✅ Test successful! Document ID: ${docRef.id}`);
+      setTestResult(`Test successful! Document ID: ${docRef.id}`);
       
       // Clean up test document after 5 seconds
       setTimeout(() => {
         setTestResult('');
       }, 5000);
     } catch (error: any) {
-      setTestResult(`❌ Test failed: ${error.message}`);
+      setTestResult(`Test failed: ${error.message}`);
     }
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6 border border-gray-200 dark:border-gray-700">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Firebase Connection Status</h3>
+    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-4 border border-gray-200/50 dark:border-gray-800/50">
+      <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Connection Status</h3>
       
-      <div className="space-y-4">
+      <div className="space-y-3">
         {/* Status Indicator */}
-        <div className="flex items-center space-x-3">
-          <div className={`w-3 h-3 rounded-full ${
+        <div className="flex items-center space-x-2">
+          <div className={`w-2 h-2 rounded-full ${
             status === 'connected' ? 'bg-green-500' :
             status === 'error' ? 'bg-red-500' :
             'bg-yellow-500 animate-pulse'
           }`}></div>
-          <span className="text-sm font-medium text-gray-900 dark:text-white">
+          <span className="text-xs font-medium text-gray-900 dark:text-white">
             {status === 'connected' ? 'Connected to Firebase' :
              status === 'error' ? 'Firebase Error' :
              'Checking connection...'}
@@ -76,8 +76,8 @@ const FirebaseStatus = () => {
 
         {/* Error Message */}
         {status === 'error' && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md p-3">
-            <p className="text-red-800 dark:text-red-200 text-sm">{errorMessage}</p>
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-3">
+            <p className="text-red-800 dark:text-red-200 text-xs">{errorMessage}</p>
             <p className="text-red-600 dark:text-red-400 text-xs mt-1">
               See FIREBASE_CONFIG.md for setup instructions
             </p>
@@ -89,21 +89,21 @@ const FirebaseStatus = () => {
           <div className="space-y-2">
             <button
               onClick={testWrite}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm"
+              className="bg-blue-600 text-white px-3 py-2 rounded-xl hover:bg-blue-700 transition-colors text-xs"
             >
-              🧪 Test Firebase Write
+              Test Connection
             </button>
             {testResult && (
-              <p className="text-sm text-gray-700 dark:text-gray-300">{testResult}</p>
+              <p className="text-xs text-gray-700 dark:text-gray-300">{testResult}</p>
             )}
           </div>
         )}
 
         {/* Setup Instructions */}
         {status === 'error' && (
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md p-3">
-            <h4 className="text-blue-900 dark:text-blue-200 font-medium mb-2">Quick Setup:</h4>
-            <ol className="text-blue-800 dark:text-blue-300 text-sm space-y-1">
+          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-3">
+            <h4 className="text-blue-900 dark:text-blue-200 font-medium mb-2 text-xs">Quick Setup:</h4>
+            <ol className="text-blue-800 dark:text-blue-300 text-xs space-y-1">
               <li>1. Go to <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" className="underline">Firebase Console</a></li>
               <li>2. Create a new project</li>
               <li>3. Enable Firestore Database</li>

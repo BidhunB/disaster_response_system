@@ -42,22 +42,6 @@ const MapView = ({ reports }: { reports: any[] }) => {
     }
   };
 
-  // Get disaster type icon
-  const getDisasterIcon = (type: string) => {
-    switch (type.toLowerCase()) {
-      case 'fire': return '🔥';
-      case 'flood': return '🌊';
-      case 'earthquake': return '🌋';
-      case 'storm': return '⛈️';
-      case 'medical emergency': return '🚑';
-      case 'traffic accident': return '🚗';
-      case 'power outage': return '⚡';
-      case 'gas leak': return '💨';
-      case 'building collapse': return '🏢';
-      default: return '⚠️';
-    }
-  };
-
   return (
     <MapContainer 
       center={mapCenter as [number, number]} 
@@ -84,7 +68,6 @@ const MapView = ({ reports }: { reports: any[] }) => {
           <Popup className="custom-popup">
             <div className="p-2 min-w-[250px]">
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xl">{getDisasterIcon(report.type)}</span>
                 <h3 className="font-semibold text-gray-900">{report.type}</h3>
               </div>
               

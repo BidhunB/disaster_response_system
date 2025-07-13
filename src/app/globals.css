@@ -38,3 +38,13 @@ textarea::placeholder {
   color: var(--placeholder) !important;
   opacity: 1 !important;
 }
+
+/* Lower the z-index of leaflet popups and controls so nav/header stays on top */
+.leaflet-container {
+  z-index: 10 !important;
+}
+.leaflet-top,
+.leaflet-bottom,
+.leaflet-popup {
+  z-index: 11 !important;
+}
