@@ -56,7 +56,7 @@ const FirebaseStatus = () => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-4 border border-gray-200/50 dark:border-gray-800/50">
+    <div className="bg-white hidden dark:bg-gray-900 rounded-2xl shadow-sm p-4 border border-gray-200/50 dark:border-gray-800/50">
       <h3 className="text-sm font-medium text-gray-900 dark:text-white mb-3">Connection Status</h3>
       
       <div className="space-y-3">

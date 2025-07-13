@@ -42,7 +42,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50 dark:bg-black">
       {/* Header */}
       <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 sticky top-0 z-[99]">
-        <div className="w-full mx-3.5 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div>
               <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -64,7 +64,7 @@ export default function Dashboard() {
 
       {/* Tab Navigation */}
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200/50 dark:border-gray-800/50">
-        <div className="w-full mx-3.5 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-8">
             {[
               { id: 'overview', label: 'Overview' },
@@ -87,7 +87,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <main className="w-full mx-3.5 px-4 sm:px-6 lg:px-8 py-6">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <Statistics reports={reports} />

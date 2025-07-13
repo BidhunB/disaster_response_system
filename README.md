@@ -2,6 +2,12 @@
 
 A real-time, crowdsourced emergency reporting and response coordination web application built with Next.js, React, Firebase, and Leaflet.
 
+<p align="center">
+  <a href="https://disaster-response-system-six.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-%F0%9F%9A%80-blue?style=for-the-badge" alt="Live Demo" />
+  </a>
+</p>
+
 ## 🌟 Features
 
 ### 📱 Emergency Reporting

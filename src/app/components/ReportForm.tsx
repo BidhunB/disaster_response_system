@@ -258,7 +258,7 @@ const ReportForm = () => {
             <button
               type="button"
               onClick={handleManualLocation}
-              className="w-full bg-gray-600 text-white px-4 py-2 rounded-xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors text-sm"
+              className="w-full hidden bg-gray-600 text-white px-4 py-2 rounded-xl hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors text-sm"
             >
               Use Test Location
             </button>
