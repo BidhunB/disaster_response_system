@@ -1,21 +1,33 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Statistics from "../components/Statistics";
 import AccidentRateChart from "../components/AccidentRateChart";
+import Navbar from "../components/Navbar";
+import BackgroundEffects from "../components/BackgroundEffects";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 
 // Dynamically import MapView with SSR disabled
 const MapView = dynamic(() => import("../components/MapView"), {
   ssr: false,
 });
 
-export default function Dashboard() {
+function DashboardContent() {
   const [reports, setReports] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'overview' | 'map' | 'reports'>('overview');
+  const searchParams = useSearchParams();
+  const initialTab = searchParams.get("tab") as 'overview' | 'map' | 'reports' || 'overview';
+  const [activeTab, setActiveTab] = useState<'overview' | 'map' | 'reports'>(initialTab);
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab && ['overview', 'map', 'reports'].includes(tab)) {
+      setActiveTab(tab as any);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const q = query(collection(db, "reports"), orderBy("timestamp", "desc"));
@@ -40,31 +52,12 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black">
-      {/* Header */}
-      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-800/50 sticky top-0 z-[99]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Dashboard
-              </h1>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Emergency response overview
-              </p>
-            </div>
-            <a
-              href="/"
-              className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors text-sm font-medium"
-            >
-              Back to Home
-            </a>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gray-50 dark:bg-black relative">
+      <BackgroundEffects />
+      <Navbar />
 
       {/* Tab Navigation */}
-      <div className="bg-white dark:bg-gray-900 border-b border-gray-200/50 dark:border-gray-800/50">
+      <div className="bg-white dark:bg-gray-900 border-b border-gray-200/50 dark:border-gray-800/50 pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex space-x-8">
             {[
@@ -77,7 +70,7 @@ export default function Dashboard() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`py-3 px-1 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                    ? 'border-red-600 text-red-600 dark:text-red-400'
                     : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                 }`}
               >
@@ -209,4 +202,19 @@ export default function Dashboard() {
       </main>
     </div>
   );
-} 
+}
+
+export default function Dashboard() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 dark:bg-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">Loading dashboard...</p>
+        </div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
+  );
+}
