@@ -29,6 +29,7 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="/report"
+              id="tour-report-btn"
               className="inline-flex justify-center items-center px-8 py-4 text-base font-semibold text-white bg-red-600 rounded-full hover:bg-red-700 transition-all shadow-lg shadow-red-600/25 hover:shadow-red-600/40 transform hover:-translate-y-0.5"
             >
               Submit a Report

@@ -41,7 +41,7 @@ export default function Navbar() {
             <Link href="/" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
               Home
             </Link>
-            <Link href="/dashboard?tab=map" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
+            <Link href="/dashboard?tab=map" id="tour-live-map" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
               Live Map
             </Link>
             <Link href="/dashboard" className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -77,6 +77,7 @@ export default function Navbar() {
               <div className="flex items-center gap-4">
                 <Link
                   href="/login"
+                  id="tour-login-btn"
                   className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                   Sign In

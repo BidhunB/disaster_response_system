@@ -1,10 +1,12 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import HowItWorks from "./components/HowItWorks";
+import GuidedTour from "./components/GuidedTour";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-white dark:bg-black">
+      <GuidedTour />
       <Navbar />
       <Hero />
       <HowItWorks />
