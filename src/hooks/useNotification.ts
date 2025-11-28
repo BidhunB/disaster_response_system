@@ -77,16 +77,7 @@ export function useNotification() {
 
     // Listen for new reports and trigger local notifications
     useEffect(() => {
-        if (!user) {
-            console.log("NotificationHook: No user logged in");
-            return;
-        }
-        if (permission !== "granted") {
-            console.log("NotificationHook: Permission not granted", permission);
-            return;
-        }
-
-        console.log("NotificationHook: Starting listener...");
+        if (!user || permission !== "granted") return;
 
         // Listen for reports from the last 5 minutes
         const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
@@ -97,22 +88,16 @@ export function useNotification() {
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            console.log("NotificationHook: Snapshot received", snapshot.docChanges().length, "changes");
-
             snapshot.docChanges().forEach((change) => {
                 if (change.type === "added") {
                     const report = change.doc.data();
-                    console.log("NotificationHook: New report detected", report);
-
                     const userLoc = lastLocationRef.current;
-                    console.log("NotificationHook: User location is", userLoc);
 
                     if (userLoc && report.lat && report.lng && report.severity) {
                         const center: [number, number] = [report.lat, report.lng];
                         const userPoint: [number, number] = [userLoc.lat, userLoc.lng];
 
                         const distanceInKm = geofire.distanceBetween(userPoint, center);
-                        console.log(`NotificationHook: Distance to report is ${distanceInKm}km`);
 
                         let radiusInKm = 0.5;
                         switch (report.severity) {
@@ -122,21 +107,15 @@ export function useNotification() {
                             case "critical": radiusInKm = 15; break;
                             case "catastrophic": radiusInKm = 50; break;
                         }
-                        console.log(`NotificationHook: Alert radius is ${radiusInKm}km`);
 
                         if (distanceInKm <= radiusInKm) {
-                            console.log("NotificationHook: Triggering notification!");
                             new Notification(`Emergency Alert: ${report.type}`, {
                                 body: `${report.severity.toUpperCase()} severity incident reported ${distanceInKm.toFixed(1)}km away.`,
                                 icon: "/favicon.ico"
                             });
 
                             toast.error(`ALERT: ${report.type} reported nearby!`, { duration: 5000 });
-                        } else {
-                            console.log("NotificationHook: Report is too far away");
                         }
-                    } else {
-                        console.log("NotificationHook: Missing location data in report or user location unknown");
                     }
                 }
             });
