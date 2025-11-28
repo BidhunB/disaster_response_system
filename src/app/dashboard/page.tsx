@@ -9,6 +9,7 @@ import Navbar from "../components/Navbar";
 import BackgroundEffects from "../components/BackgroundEffects";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
+import { useNotification } from "@/hooks/useNotification";
 
 // Dynamically import MapView with SSR disabled
 const MapView = dynamic(() => import("../components/MapView"), {
@@ -21,6 +22,7 @@ function DashboardContent() {
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab") as 'overview' | 'map' | 'reports' || 'overview';
   const [activeTab, setActiveTab] = useState<'overview' | 'map' | 'reports'>(initialTab);
+  const { requestPermission, permission } = useNotification();
 
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -80,6 +82,23 @@ function DashboardContent() {
           </nav>
         </div>
       </div>
+
+      {/* Notification Permission Banner */}
+      {permission === "default" && (
+        <div className="bg-blue-50 dark:bg-blue-900/20 border-b border-blue-200 dark:border-blue-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+            <p className="text-sm text-blue-700 dark:text-blue-300">
+              Enable notifications to get alerts about nearby emergencies.
+            </p>
+            <button
+              onClick={requestPermission}
+              className="text-sm font-medium text-blue-700 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-200 underline"
+            >
+              Enable Notifications
+            </button>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {activeTab === 'overview' && (
