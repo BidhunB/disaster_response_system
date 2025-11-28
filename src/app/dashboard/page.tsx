@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Statistics from "../components/Statistics";
+import AccidentRateChart from "../components/AccidentRateChart";
 import dynamic from "next/dynamic";
 
 // Dynamically import MapView with SSR disabled
@@ -91,6 +92,9 @@ export default function Dashboard() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <Statistics reports={reports} />
+            
+            <AccidentRateChart reports={reports} />
+
             
             {/* Recent Activity */}
             <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6 border border-gray-200/50 dark:border-gray-800/50">
