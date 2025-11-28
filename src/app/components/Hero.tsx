@@ -17,9 +17,9 @@ export default function Hero() {
           </div>
           
           <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white tracking-tight mb-8 leading-tight">
-            Report disasters <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600">instantly </span>.
+            Report disasters <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600">instantly</span> 
             <br />
-            Help your community <br/> respond<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600"> faster</span> .
+            Help your community <br/> respond<span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-600"> faster</span>.
           </h1>
           
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-9xl leading-relaxed">

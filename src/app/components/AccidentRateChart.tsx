@@ -114,8 +114,12 @@ export default function AccidentRateChart({ reports }: AccidentRateChartProps) {
             </Bar>
             <defs>
               <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#3B82F6" stopOpacity={1}/>
-                <stop offset="100%" stopColor="#2563EB" stopOpacity={0.8}/>
+<stop offset="0%" stopColor="#FF5757" stopOpacity={1}/>   {/* Light Red */}
+<stop offset="100%" stopColor="#B80000" stopOpacity={1}/> {/* Dark Red */}
+
+
+
+
               </linearGradient>
             </defs>
           </BarChart>
