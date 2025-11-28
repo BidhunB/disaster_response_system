@@ -14,15 +14,26 @@ A real-time, crowdsourced emergency reporting and response coordination web appl
 - **Real-time Location Detection**: Automatic GPS location capture
 - **Multiple Disaster Types**: Fire, Flood, Earthquake, Storm, Medical Emergency, Traffic Accident, Power Outage, Gas Leak, Building Collapse
 - **Severity Levels**: Low, Medium, High, Critical with color-coded indicators
-- **Contact Information**: Optional contact details for follow-up
 - **Instant Submission**: Real-time report submission with Firebase
+- **Image Upload**: (Planned) Support for attaching images to reports
 
 ### 🗺️ Interactive Mapping
 - **Live Map View**: Real-time visualization of all emergency reports
 - **Color-coded Markers**: Severity-based marker colors (Red=Critical, Orange=High, Yellow=Medium, Green=Low)
 - **Rich Popups**: Detailed information including type, severity, description, location, and timestamp
 - **Dynamic Centering**: Map automatically centers on reported incidents
-- **Responsive Design**: Works on desktop and mobile devices
+- **Geospatial Querying**: Efficiently loads reports within a specific radius using `geofire-common`
+
+### 🔐 Secure Authentication
+- **Google Sign-In**: One-click login with Google
+- **Email/Password**: Traditional account creation with strong password enforcement
+- **Protected Routes**: Secure access to reporting and dashboard features
+- **User Profiles**: Personalized experience with user avatars
+
+### 🎓 User Onboarding
+- **Guided Tour**: Interactive "game-like" walkthrough for new users
+- **Spotlight Effect**: Highlights key features (Live Map, Report Button) to get users started quickly
+- **Smart Persistence**: Remembers if a user has already seen the tour
 
 ### 📊 Analytics Dashboard
 - **Real-time Statistics**: Total reports, today's reports, weekly trends
@@ -31,20 +42,36 @@ A real-time, crowdsourced emergency reporting and response coordination web appl
 - **Response Status Tracking**: Pending, In Progress, Resolved status tracking
 - **Recent Activity Feed**: Latest emergency reports with status indicators
 
-### 🔍 Advanced Filtering
-- **Type-based Filtering**: Filter reports by disaster type
-- **Real-time Updates**: Live filtering with instant map updates
-- **Report Count Display**: Shows filtered vs total report counts
-
 ## 🛠️ Technology Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS 4
+- **Animations**: Framer Motion (for Guided Tour and UI transitions)
+- **Notifications**: React Hot Toast
 - **Database**: Firebase Firestore (Real-time)
+- **Authentication**: Firebase Auth
 - **Mapping**: Leaflet with React-Leaflet
+- **Geospatial**: Geofire Common
+- **Charts**: Recharts
 - **Deployment**: Vercel-ready
 
-## 🚀 Getting Started
+## � Firebase Services
+
+The application relies heavily on Firebase for its backend infrastructure:
+
+- **Authentication**: 
+  - Google Sign-In provider
+  - Email/Password authentication
+  - Session management
+- **Firestore Database**: 
+  - Real-time event listeners for live updates
+  - Geospatial querying using `geofire-common`
+  - Scalable NoSQL structure for reports
+- **Security Rules**: 
+  - Protected writes to ensure data integrity
+  - Public reads for transparency (configurable)
+
+## �🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+ 
@@ -99,16 +126,21 @@ disaster_response_system/
 │   ├── app/
 │   │   ├── components/
 │   │   │   ├── animations/
-│   │   │   │   └── LoadingSpinner.tsx
-│   │   │   ├── MapView.tsx
-│   │   │   ├── ReportForm.tsx
-│   │   │   └── Statistics.tsx
+│   │   │   ├── GuidedTour.tsx    # Interactive onboarding tour
+│   │   │   ├── MapView.tsx       # Leaflet map component
+│   │   │   ├── ReportForm.tsx    # Incident reporting form
+│   │   │   └── Statistics.tsx    # Dashboard analytics
 │   │   ├── dashboard/
-│   │   │   └── page.tsx
+│   │   ├── login/
+│   │   ├── report/
 │   │   ├── layout.tsx
 │   │   └── page.tsx
+│   ├── context/
+│   │   └── AuthContext.tsx       # Authentication state management
+│   ├── hooks/
+│   │   └── useNotification.ts    # Custom notification hook
 │   └── lib/
-│       └── firebase.ts
+│       └── firebase.ts           # Firebase configuration
 ├── public/
 ├── package.json
 └── README.md
@@ -116,54 +148,24 @@ disaster_response_system/
 
 ## 🎯 Key Components
 
+### GuidedTour
+- Implements a "spotlight" effect using SVG masks and `framer-motion`.
+- Guides users through the main navigation elements.
+
 ### ReportForm
 - Handles emergency report submission
 - GPS location detection
 - Form validation and error handling
-- Success feedback
 
 ### MapView
 - Interactive map with real-time markers
 - Color-coded severity indicators
 - Rich popup information
-- Dynamic map centering
 
 ### Statistics
 - Real-time analytics dashboard
 - Severity and type breakdowns
 - Response status tracking
-- Visual data representation
-
-### Dashboard
-- Comprehensive overview page
-- Tabbed interface (Overview, Map, Reports)
-- Detailed report table
-- Recent activity feed
-
-## 🔧 Configuration
-
-### Firebase Setup
-1. Create a new Firebase project
-2. Enable Firestore Database
-3. Set up security rules:
-   ```javascript
-   rules_version = '2';
-   service cloud.firestore {
-     match /databases/{database}/documents {
-       match /reports/{document} {
-         allow read, write: if true; // For development
-       }
-     }
-   }
-   ```
-
-### Environment Variables
-Create a `.env.local` file for production:
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-```
 
 ## 📱 Mobile Responsiveness
 
@@ -173,40 +175,12 @@ The application is fully responsive and optimized for:
 - Tablet screens
 - Touch interactions
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Add environment variables in Vercel dashboard
-4. Deploy automatically
-
-### Other Platforms
-The app can be deployed to any platform that supports Next.js:
-- Netlify
-- AWS Amplify
-- Google Cloud Run
-- Docker containers
-
 ## 🔒 Security Considerations
 
 - **Input Validation**: All form inputs are validated
 - **Location Privacy**: GPS location is only captured when explicitly requested
 - **Data Protection**: Contact information is optional and encrypted
 - **Rate Limiting**: Consider implementing rate limiting for report submissions
-
-## 🧪 Testing
-
-```bash
-# Run linting
-npm run lint
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-```
 
 ## 🤝 Contributing
 
@@ -227,13 +201,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Provide accurate information
 - Include relevant contact details when possible
 - Follow local emergency protocols
-
-## 📞 Support
-
-For technical support or questions:
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
 
 ---
 
